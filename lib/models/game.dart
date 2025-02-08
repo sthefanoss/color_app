@@ -10,10 +10,6 @@ enum SelectedTileState {
   DroppedRight,
 }
 
-enum GameDifficulty { Easy, Medium, Hard }
-
-enum NumberOfFixedTiles { Few, Medium, Good }
-
 class GameProvider {
   void initGame({
     required Color topLeftColor,
@@ -21,25 +17,21 @@ class GameProvider {
     required Color bottomLeftColor,
     required Color bottomRightColor,
     Point<int> size = const Point<int>(10, 10),
-    List<Point<int>>? fixedPoints,
-    NumberOfFixedTiles? numberOfFixedTiles,
   }) {
+    final fixedPoints = [
+      Point<int>(0, 0),
+      Point<int>(size.x - 1, 0),
+      Point<int>(0, size.y - 1),
+      Point<int>(size.x - 1, size.y - 1),
+    ];
     _answerTiles = {};
     _fixedTiles = {};
     _movableTiles = {};
-    final random = Random();
     _size = size;
     _backgroundColor = _dualLerp(topLeftColor, topRightColor, bottomLeftColor, bottomRightColor, 0.5, 0.5);
     _darkBackgroundColor = Color.lerp(_backgroundColor, Colors.black, 0.8)!.withOpacity(1);
-    final numberGain = numberOfFixedTiles == NumberOfFixedTiles.Few
-        ? 0
-        : numberOfFixedTiles == NumberOfFixedTiles.Medium
-            ? 1
-            : 2;
-    fixedPoints = fixedPoints ??
-        List<Point<int>>.generate(
-            size.x ~/ 3 + numberGain, (_) => Point(random.nextInt(size.x), random.nextInt(size.y)));
-    for (int y = 0; y < size.y; y++)
+
+    for (int y = 0; y < size.y; y++) {
       for (int x = 0; x < size.x; x++) {
         final position = Point<int>(x, y);
         final color = _dualLerp(
@@ -51,6 +43,7 @@ class GameProvider {
           _answerTiles[position] = color;
         }
       }
+    }
     _shuffle();
     _selectedTile = null;
     _swappedTile = null;
