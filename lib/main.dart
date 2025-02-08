@@ -1,28 +1,28 @@
 import 'package:flutter/material.dart';
-import 'package:flutter/cupertino.dart';
 import 'package:provider/provider.dart';
-import 'dart:math';
-import 'dart:async';
 import 'pages/level.dart';
 import 'models/game.dart';
 import 'package:flutter/services.dart';
 import 'pages/home.dart';
 
-void main() => runApp(MyApp());
+void main() => runApp(const MyApp());
 
 class MyApp extends StatefulWidget {
+  const MyApp({super.key});
+
   // This widget is the root of your application.
   @override
-  _MyAppState createState() => _MyAppState();
+  State<MyApp> createState() => _MyAppState();
 }
 
 class _MyAppState extends State<MyApp> {
   @override
   void initState() {
-    SystemChrome.setSystemUIOverlayStyle(SystemUiOverlayStyle().copyWith(
-        systemNavigationBarColor: Colors.transparent,
-        statusBarColor: Colors.transparent));
-    SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
+    SystemChrome.setSystemUIOverlayStyle(const SystemUiOverlayStyle().copyWith(
+      systemNavigationBarColor: Colors.transparent,
+      statusBarColor: Colors.transparent,
+    ));
+    // SystemChrome.setEnabledSystemUIOverlays([SystemUiOverlay.top]);
 
     super.initState();
   }
@@ -36,8 +36,8 @@ class _MyAppState extends State<MyApp> {
         //  color: Colors.purple,
         theme: ThemeData.dark(),
         routes: {
-          '/': (ctx) => HomePage(),
-          '/level': (ctx) => LevelPage(),
+          '/': (ctx) => const HomePage(),
+          '/level': (ctx) => const LevelPage(),
         },
       ),
     );
